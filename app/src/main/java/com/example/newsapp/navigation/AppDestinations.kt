@@ -12,7 +12,3 @@ object Favorite : AppDestinations {
     override val route = "favorite"
 }
 
-object ArticleDetails : AppDestinations {
-    override val route = "articleDetails"
-}
-
