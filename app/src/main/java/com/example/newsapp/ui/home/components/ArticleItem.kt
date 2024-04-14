@@ -137,9 +137,9 @@ fun ArticleList(
             .fillMaxSize()
             .height(700.dp),
     ) {
-        items(articles.size, key = { articles[it].description!! }) {
+        items(articles.size, key = { articles[it].description ?: "" }) {
             ArticleItem(
-                article = articles[it],
+                article = articles[it] ?: Article(content = ""),
                 isFav = articles[it].isFavorite,
                 onFavoriteClicked = onFavoriteClicked,
                 //onArticleClicked = onArticleClicked
