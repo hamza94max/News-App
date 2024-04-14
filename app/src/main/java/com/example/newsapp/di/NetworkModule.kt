@@ -1,5 +1,7 @@
 package com.example.newsapp.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.newsapp.BuildConfig
 import com.example.newsapp.data.remote.ApiService
 import com.google.gson.GsonBuilder
@@ -20,17 +22,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(context: Context): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(40, TimeUnit.SECONDS)
             .readTimeout(40, TimeUnit.SECONDS)
             .addInterceptor { chain ->
                 val originalRequest = chain.request()
                 val modifiedRequest = originalRequest.newBuilder()
-                    .header("X-Auth-Token", BuildConfig.API_KEY)
+                    .header("X-api-key", BuildConfig.API_KEY)
                     .build()
                 chain.proceed(modifiedRequest)
             }
+            .addInterceptor(ChuckerInterceptor(context))
             .build()
     }
 
