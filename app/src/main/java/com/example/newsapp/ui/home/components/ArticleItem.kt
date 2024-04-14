@@ -104,7 +104,7 @@ fun ArticleList(
             .fillMaxSize()
             .height(700.dp),
     ) {
-        items(articles.size, key = { articles[it].title!! }) {
+        items(articles.size, key = { articles[it].source?.id!! }) {
             ArticleItem(article = articles[it] /*onArticleClicked = onArticleClicked*/)
             Divider()
         }
