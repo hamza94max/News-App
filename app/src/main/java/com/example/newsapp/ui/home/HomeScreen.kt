@@ -9,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.newsapp.NewsViewModel
+import com.example.newsapp.ui.favourites.FavouritesViewModel
 import com.example.newsapp.ui.home.components.ArticleList
 import com.example.newsapp.ui.home.components.ErrorText
 import com.example.newsapp.ui.home.components.Loading
@@ -17,7 +17,8 @@ import com.example.newsapp.utils.Resource
 
 @Composable
 fun HomeScreen(
-    newsViewModel: NewsViewModel = hiltViewModel()
+    newsViewModel: NewsViewModel = hiltViewModel(),
+    favouritesViewModel: FavouritesViewModel = hiltViewModel()
 ) {
     var searchQuery by remember { mutableStateOf("") }
 
@@ -51,7 +52,12 @@ fun HomeScreen(
                 if (articles.isNullOrEmpty()) {
                     Text(text = "No articles found")
                 } else {
-                    ArticleList(articles = articles)
+                    ArticleList(
+                        articles = articles, onFavoriteClicked = {
+                            it.isFavorite = true
+                            favouritesViewModel.insertToFavourites(it)
+                        }
+                    )
                 }
             }
         }
